@@ -43,9 +43,6 @@ import com.b3dgs.lionengine.game.feature.tile.map.collision.CollisionFormulaConf
 import com.b3dgs.lionengine.game.feature.tile.map.collision.CollisionGroupConfig;
 import com.b3dgs.lionengine.game.feature.tile.map.collision.MapTileCollision;
 import com.b3dgs.lionengine.game.feature.tile.map.collision.MapTileCollisionModel;
-import com.b3dgs.lionengine.game.feature.tile.map.pathfinding.MapTilePath;
-import com.b3dgs.lionengine.game.feature.tile.map.pathfinding.MapTilePathModel;
-import com.b3dgs.lionengine.game.feature.tile.map.pathfinding.PathfindingConfig;
 import com.b3dgs.lionengine.game.feature.tile.map.persister.MapTilePersister;
 import com.b3dgs.lionengine.game.feature.tile.map.persister.MapTilePersisterListener;
 import com.b3dgs.lionengine.game.feature.tile.map.persister.MapTilePersisterModel;
@@ -137,7 +134,6 @@ public class MapTileHelper extends MapTileGame
 
     private final MapTileGroup mapGroup;
     private final MapTileCollision mapCollision;
-    private final MapTilePath mapPath;
     private final MapTileTransition mapTransition;
     private final MapTileRastered mapRaster;
     private final MapTileViewer mapViewer;
@@ -153,7 +149,6 @@ public class MapTileHelper extends MapTileGame
 
         mapGroup = addFeature(new MapTileGroupModel());
         mapCollision = addFeature(new MapTileCollisionModel());
-        mapPath = addFeature(new MapTilePathModel());
         mapTransition = addFeature(new MapTileTransitionModel());
         mapRaster = addFeature(new MapTileRasteredModel());
         mapViewer = addFeature(new MapTileViewerModel(services));
@@ -205,7 +200,6 @@ public class MapTileHelper extends MapTileGame
             {
                 mapCollision.loadCollisions(configFormulas, Medias.create(parent, CollisionGroupConfig.FILENAME));
             }
-            load(media, mapPath::loadPathfinding, PathfindingConfig.FILENAME);
             load(media, mapTransition::loadTransitions, TransitionsConfig.FILENAME);
 
             if (mapRaster.loadSheets())

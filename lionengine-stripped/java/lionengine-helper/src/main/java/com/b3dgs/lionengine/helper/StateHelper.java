@@ -28,7 +28,6 @@ import com.b3dgs.lionengine.game.feature.body.Body;
 import com.b3dgs.lionengine.game.feature.collidable.Collidable;
 import com.b3dgs.lionengine.game.feature.collidable.CollidableListener;
 import com.b3dgs.lionengine.game.feature.collidable.Collision;
-import com.b3dgs.lionengine.game.feature.networkable.Networkable;
 import com.b3dgs.lionengine.game.feature.rasterable.Rasterable;
 import com.b3dgs.lionengine.game.feature.state.StateAbstract;
 import com.b3dgs.lionengine.game.feature.tile.map.collision.Axis;
@@ -84,8 +83,7 @@ public class StateHelper<M extends EntityModelHelper> extends StateAbstract
     protected final TileCollidable tileCollidable;
     /** Collidable reference. */
     protected final Collidable collidable;
-    /** Networkable reference. */
-    protected final Networkable networkable;
+    // network strip: Networkable reference removed
     /** Collide horizontal flag. */
     private boolean collideX;
     /** Collide vertical flag. */
@@ -111,7 +109,7 @@ public class StateHelper<M extends EntityModelHelper> extends StateAbstract
         tileCollidable = model.getFeature(TileCollidable.class);
         collidable = model.getFeature(Collidable.class);
         rasterable = model.getFeature(Rasterable.class);
-        networkable = model.getFeature(Networkable.class);
+        // network strip: networkable feature lookup removed
     }
 
     /**
