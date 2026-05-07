@@ -28,6 +28,7 @@
 #include "lh_le_factory.h"
 #include "lh_le_graphic.h"
 #include "lh_le_handler.h"
+#include "lh_le_image_buffer.h"
 #include "lh_le_map_tile.h"
 #include "lh_le_services.h"
 #include "lh_load_next_stage.h"
@@ -53,6 +54,9 @@ typedef struct {
     lh_collision_formula_config formulas;
     lh_collision_group_config   groups;
     lh_tile_groups_config       tile_groups;
+
+    /* Sheet PNG surfaces (asset cache, NOT owned). Indexed by sheet id. */
+    lh_image_buffer*      sheet_surfaces[LH_TILE_SHEETS_MAX];
 
     /* Game-level inputs. */
     lh_game_config        game;

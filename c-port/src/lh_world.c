@@ -3,10 +3,12 @@
  */
 #include "lh_world.h"
 
+#include "lh_asset_cache.h"
 #include "lh_constant.h"
 #include "lh_extension.h"
 #include "lh_folder.h"
 #include "lh_le_check.h"
+#include "lh_map_tile_persister.h"
 #include "lh_medias.h"
 
 #include <stdio.h>
@@ -68,6 +70,19 @@ static void load_collisions(lh_world* w, const char* parent_dir)
     }
 }
 
+/* Load each sheet PNG referenced by sheets.xml into the asset cache and
+ * cache the surface pointer in w->sheet_surfaces[i]. Sheet paths in the
+ * config are relative to parent_dir (the level dir holding sheets.xml). */
+static void load_sheet_surfaces(lh_world* w, const char* parent_dir)
+{
+    for (int i = 0; i < w->sheets.count && i < LH_TILE_SHEETS_MAX; i++)
+    {
+        char path[LH_MEDIA_PATH_MAX];
+        snprintf(path, sizeof(path), "%s/%s", parent_dir, w->sheets.paths[i]);
+        w->sheet_surfaces[i] = lh_asset_get_image(path);
+    }
+}
+
 bool lh_world_load_stage(lh_world* w, const char* media)
 {
     if (!w || !media) return false;
@@ -88,8 +103,16 @@ bool lh_world_load_stage(lh_world* w, const char* media)
         if (lh_medias_exists(sheets_path))
         {
             lh_tile_sheets_load(&w->sheets, sheets_path);
+            load_sheet_surfaces(w, parent);
         }
         load_collisions(w, parent);
+
+        /* Load the binary .lvl tile grid. Resolve relative path. */
+        char lvl_path[LH_MEDIA_PATH_MAX];
+        if (lh_medias_resolve(w->stage.map_file, lvl_path, sizeof(lvl_path)))
+        {
+            lh_map_tile_persister_load(&w->map, lvl_path);
+        }
     }
 
     /* 3. Checkpoints sourced from stage. */
@@ -129,14 +152,65 @@ void lh_world_update(lh_world* w, double extrp)
     lh_load_next_stage_update    (&w->next_stage, (int)(extrp * (1000.0 / LH_RES_RATE)));
 }
 
+/* Draw the visible tile range. Each map cell packs (sheet_id << 16) |
+ * tile_num; -1 = empty. tile_num is 1-based per Java convention. */
+static void render_tiles(lh_world* w, lh_graphic* g)
+{
+    if (!w || !g) return;
+    const int tw = w->sheets.tile_width;
+    const int th = w->sheets.tile_height;
+    if (tw <= 0 || th <= 0) return;
+
+    const int in_w = lh_map_tile_get_in_tile_width (&w->map);
+    const int in_h = lh_map_tile_get_in_tile_height(&w->map);
+    if (in_w <= 0 || in_h <= 0) return;
+
+    /* Camera-relative visible window in tile coords. */
+    const int cx = (int)w->camera.x;
+    const int cy = (int)w->camera.y;
+    const int vw = w->camera.width;
+    const int vh = w->camera.height;
+    int tx0 = cx / tw;
+    int ty0 = cy / th;
+    int tx1 = (cx + vw + tw - 1) / tw + 1;
+    int ty1 = (cy + vh + th - 1) / th + 1;
+    if (tx0 < 0) tx0 = 0;
+    if (ty0 < 0) ty0 = 0;
+    if (tx1 > in_w) tx1 = in_w;
+    if (ty1 > in_h) ty1 = in_h;
+
+    for (int ty = ty0; ty < ty1; ty++)
+    {
+        for (int tx = tx0; tx < tx1; tx++)
+        {
+            const int32_t packed = lh_map_tile_get_tile(&w->map, tx, ty);
+            if (packed < 0) continue;
+
+            const int sheet_id = (int)((uint32_t)packed >> 16);
+            const int tile_num = (int)((uint32_t)packed & 0xFFFFu);
+            if (sheet_id < 0 || sheet_id >= w->sheets.count) continue;
+            lh_image_buffer* sheet = w->sheet_surfaces[sheet_id];
+            if (!sheet || sheet->width <= 0) continue;
+
+            const int cols    = sheet->width / tw;
+            if (cols <= 0) continue;
+            const int idx     = tile_num > 0 ? tile_num - 1 : 0;
+            const int sx      = (idx % cols) * tw;
+            const int sy      = (idx / cols) * th;
+            const int dx      = tx * tw - cx;
+            const int dy      = ty * th - cy;
+
+            lh_graphic_draw_image_region(g, sheet, sx, sy, tw, th, dx, dy);
+        }
+    }
+}
+
 void lh_world_render(lh_world* w, lh_graphic* g)
 {
     if (!w || !g) return;
 
     lh_landscape_render_background(&w->landscape, g, &w->camera);
-    /* TODO phase 7+: draw the active tile map here once a renderer is
-     * wired. For now Handler renders any Featurable that registered a
-     * render_vt; landscape covers the rest. */
+    render_tiles(w, g);
     lh_handler_render(&w->handler, g);
     lh_landscape_render_foreground(&w->landscape, g, &w->camera);
 }
