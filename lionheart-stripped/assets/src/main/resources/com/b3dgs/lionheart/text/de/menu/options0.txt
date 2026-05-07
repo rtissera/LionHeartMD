@@ -1,0 +1,7 @@
+Spiel:
+Level:
+Schwierigkeit:
+Spieler:
+Controller:
+Spielstart
+Beenden

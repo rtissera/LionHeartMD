@@ -1,0 +1,27 @@
+Idioma:
+Aumento:
+Proporción:
+Resolución:
+Disponible:
+Ventana:
+Filtrar:
+Juego:
+2 Botones:
+Música:
+   Sfx:
+Strategy:
+Parallel:
+VSync:
+Raster:
+Visible:
+Espada:
+Fondo:
+Primer plano:
+Zoom:
+Avanzado
+Controlador
+Jugar
+Create server
+Join server
+Editor
+Salida

@@ -1,0 +1,44 @@
+Choose game language.
+Available game languages.
+Resolution scale factor based on original game resolution.
+Selected scale factor.
+Ratio applied to scaled resolution, 4/3 is the original game ratio.
+Selected ratio.
+Current resolution width and height.
+Current resolution width and height.
+Choose screen rate.
+Current screen rate.
+List of supported fullscreen resolution by current monitor.
+Selected resolution.
+Selected resolution.
+Checked will display in windowed mode, unchecked in fullscreen.
+List of available filters.
+Selected filter.
+List of available gameplays.
+Selected gameplay.
+Two buttons mode.
+Select music volume.
+Current music volume.
+Select mound fx volume.
+Current sound fx volume.
+Image loading strategy mode.
+Selected loading strategy.
+Checked to enable parallel loading (default), unchecked for sequential loading.
+Checked to enabled VSync, unchecked to disable (default).
+Checked to enable raster effect (default), unchecked to disable effect.
+Checked to enable raster effect (default), unchecked to disable effect.
+Checked to display HUD (default), unchecked to hide.
+Checked to show sword level, unchecked to hide (default).
+Set background flickering.
+Set foreground flickering.
+Set original truncated view.
+Set remake normalized view.
+Select zoom view effect.
+Selected zoom view value.
+Selected zoom view value.
+Configure game controls.
+Save configuration and play local.
+Save configuration and play online as server.
+Save configuration and play online as client.
+Run game editor.
+Save configuration and exit launcher.

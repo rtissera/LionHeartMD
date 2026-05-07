@@ -1,0 +1,5 @@
+Spiel starten
+Fortsetzen
+Optionen
+Einleitung
+Beenden

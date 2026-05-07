@@ -1,0 +1,5 @@
+/bin
+/target
+/.m2
+/.settings
+com.b3dgs.lionheart.editor.target.target

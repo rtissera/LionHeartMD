@@ -1,0 +1,1 @@
+Drücke Feuer am Controller um zuzuweisen, ändere Spieleranzahl%(ID) mit rechts/links falls mehr als einer vorhanden.

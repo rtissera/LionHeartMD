@@ -1,0 +1,7 @@
+Modo:
+Trayecto:
+Dificultad:
+Jugador(es):
+Control:
+Jugar
+Salir

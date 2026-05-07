@@ -1,0 +1,27 @@
+Linguagem:
+Escala:
+Proporção:
+Resolução:
+Disponível:
+Em janela:
+Filtro:
+Jogabilidade:
+2 Botões:
+Música:
+  Sons:
+Estrategia:
+Paralelo:
+VSync:
+Raster:
+Visível:
+Espada:
+Segundo plano:
+Primeiro plano:
+Zoom:
+Avançado
+Controles
+Jogar
+Criar servidor
+Entrar em servidor
+Editor
+Exit

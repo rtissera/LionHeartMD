@@ -1,0 +1,5 @@
+Klassisches, lineares Spiel mit verknüpften%Leveln vom Intro bis zum Abspann.
+Einzelne, spielbare Level ohne Intro%und Menü, für den schnellen Spielstart.
+Beende den Level so schnell wie möglich Keine%Gegenstände, keine Monster, nur auf Geschwindigkeit.
+Bleib am Leben bis zum letzten Monster,%nutze Gegenstände um länger zu überleben!
+Kämpfe gegen andere Spieler,%maximale Gesundheit aber kein Leben!

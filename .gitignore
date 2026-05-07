@@ -1,0 +1,54 @@
+# Maven build output
+target/
+**/target/
+build/
+**/build/
+*.class
+
+# IDE
+.idea/
+.vscode/
+*.iml
+.classpath
+.project
+.settings/
+.metadata/
+
+# Logs + crash dumps
+*.log
+hs_err_pid*.log
+core.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local env
+*.local
+*.env
+
+# Secrets
+**/gh_token
+**/.m2/
+
+# C port build
+c-port/build/
+*.o
+*.d
+
+# Upstream baseline clones (recoverable via git clone)
+/lionengine/
+/lionheart-remake/
+
+# Deliverables symlinks (point to upstream clones)
+/deliverables/source/baseline-lionengine
+/deliverables/source/baseline-lionheart
+/deliverables/source/stripped-lionengine
+/deliverables/source/stripped-lionheart
+
+# Maven version artifacts
+*.jar.bak
+
+# Editor swap
+*.swp
+*~

@@ -1,0 +1,166 @@
+C26 ¡Felicitaciones
+C26 por
+C26 completar
+C26 LIONHEART!
+C26 (versión remake)
+
+
+
+C26 Equipo de producción:
+C14 -----------------------------------------------
+
+L24 Erwin Kloibhofer
+L11 programación general, preparados de Schnitzel
+L24 Michael Bittner
+L11 programación adicional, introducción, finalización,
+L11 desplazamiento en 3D, ideas, preparados de Spaetzle
+L24 Henk Nieborg
+L11 gráficos, animaciones, ideas e inspiración
+L11 para consolas
+L24 Erik Simon
+L11 concepto, diseño del juego, algunos colores,
+L11 pollo al curry, maltrato del personal
+L24 Matthias Steinwachs
+L11 composición, música, efectos de sonido,
+L11 letras graciosas
+L24 Matthias Moerstedt
+L11 parches rutinarios de sonido,
+L11 supervisión de la junta (un suspiro)
+L24 Jurie Horneman
+L11 escritura de historias, ideas, chili con carne
+L24 Dieter Rottermund
+L11 ilustración de portada
+L24 Pierre-Alexandre
+L11 programación del remake
+L24 Luciano (DrSocial)
+L11 traducción al portugues
+L24 tarr@EnglishAmigaBoard,
+L14 Mod3m de Darkage y Lanch de X-Zone
+L11 traducción al italiano
+L24 Lewis Cal (Uruguay)
+L11 traducción y adaptación al español
+
+
+
+
+
+
+C26 Mensajes personales:
+C14 --------------------------------------------
+
+
+L24 Henk Nieborg
+L14 ---------------------------
+L14 (Thalion Software)
+L11 Sólo quiero dar un gran "agradecimiento" a todos los
+L11 dedicados seguidores de Lionheart. Realmente lo
+L11 aprecio y espero poder dar algo a cambio algún día.
+L11 También me gustaría elogiar a Pierre-Alexandre.
+L11 ¡Por hacer un trabajo tan increíblemente bueno y
+L11 mantener todo con vida para los nuevos y antiguos
+L11 jugadores de Lionheart! Siempre miro hacia atrás
+L11 con un montón de buenos pensamientos y diversión
+L11 en esos días programando Lionheart, y descubriendo
+L11 mis capacidades impulsadas por todas las demás 
+L11 personas talentosas que me rodeaban.
+L11 Me enorgullece que la gente todavía aprecie el
+L11 trabajo realizado hace tantos años.
+L11 ¡Gracias y que el píxel te acompañe! :)
+
+
+L24 Erik Simon
+L14 ----------------------
+L14 (Thalion Software)
+L11 Después de trabajar en la industria de los juegos
+L11 durante 20 años, la mayoría se cansa y termina
+L11 hastiado. Tantos juegos producidos, Tanto trabajo
+L11 invertido, ¿y para qué? Los juegos son de última 
+L11 tecnología y quedan obsoletos muy rápidamente.
+L11 Nadie recuerda los éxitos del año pasado, por no
+L11 hablar de los viejos juegos de 16 bits, ¿verdad?
+L11 Y luego está el momento ocasional que me recuerda
+L11 porqué todavía me apasiona crear juegos incluso
+L11 después de todos estos años. Para algunas personas,
+L11 los juegos en los que trabajamos hace tanto tiempo
+L11 son parte de sus recuerdos y de su juventud.
+L11 Tuvieron un impacto emocional para ellos, fueron
+L11 importantes y marcaron una diferencia, al menos
+L11 para algunos. Y eso hace que todo valga la pena:
+L11 las largas horas, la lucha diaria. Proyectos como
+L11 el remake de Lionheart y de gente como Pierre-
+L11 Alexandre, su creador, me asegura que he tomado
+L11 la decisión correcta al dedicar mi vida profesional
+L11 a los juegos. Y por esa tranquilidad, agradezco a
+L11 Pierre-Alexandre, y a los los creadores originales
+L11 de Lionheart, Henk Nieborg, Erwin Kloibhofer,
+L11 Michael Bittner y Matthias Steinwachs.
+L11 Y sobre todo, gracias a todos los que se divirtieron
+L11 con nuestros juegos y que todavía los recuerdan...
+
+
+L24 Matthias Steinwachs
+L14 ----------------------------------------
+L14 (Thalion Software)
+L11 Por el relanzamiento-remake-re-lo que sea de este
+L11 gran juego (Muchas gracias a Pierre-Alexandre,
+L11 gran trabajo, hombre) es hora de revelar un secreto:
+L11 ¿Alguna vez te preguntaste '¿Quién es ese héroe
+L11 con ese largo cabello rubio en Lionheart?'
+L11 Bueno... aquí va:
+L11 ¡Es Henk, el diseñador gráfico!
+L11 Entonces, si ahora también nos encuentras a Erik,
+L11 Erwin y a mí, tal vez te ganes un premio :-)
+L11 Diviértete jugando a Lionheart y no dudes en
+L11 visitar mi sitio web (www.audiotexturat.de)
+L11 Y sí, algún día llegará el remake musical, estará
+L11 terminado cuando esté terminado...
+
+
+L24 Pierre-Alexandre
+L14 ----------------------------------
+L14 (Byron 3D Games Studio)
+L11 Bueno, una vez más hice otro remake de uno de los
+L11 juegos de mi infancia, Lionheart.
+L11 Creo que es el cuarto remake, ¡pero ahora este
+L11 funciona tanto en PC como en Android!
+L11 Utiliza mi propio motor para juegos, LionEngine
+L11 (adivinen el origen del nombre...), Implementación
+L11 completa en Java, con biblioteca especial C para
+L11 emulación de SonicArranger (también en Android).
+L11 Este remake es mi mejor copia del juego original,
+L11 considerando todos los aspectos (incluso en los
+L11 detalles más finos).
+L11 ¡Espero que nuevamente disfrutes de este remake y
+L11 nos vemos en otro proyecto!
+
+L11 ¡Muchas gracias a todos los miembros del sitio web
+L11 eab.abime.net por su apoyo y comentarios, y un
+L11 agradecimiento especial a Retro-Nerd quien me fue
+L11 de gran ayuda durante las fases beta y con las
+L11 traducciones!
+
+L11 ¡No olvides visitar mi sitio web, www.b3dgs.com!
+
+
+
+L11 ¡En memoria de los viejos Juegos...
+L11 no dejes que el Amiga muera!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+C26 F I N

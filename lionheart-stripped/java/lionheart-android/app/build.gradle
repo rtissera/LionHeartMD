@@ -1,0 +1,82 @@
+plugins {
+    id 'com.android.application'
+    id 'signing'
+}
+
+group = 'com.b3dgs.lionheart'
+version = '1.4.0-SNAPSHOT'
+
+android {
+    packagingOptions {
+        jniLibs {
+            excludes += ['**/lionheart/**']
+        }
+        resources {
+            excludes += ['**/lionheart/**']
+        }
+    }
+
+    signingConfigs {
+        app {
+            storeFile file(property('keystore'))
+            keyAlias property('keystore.alias')
+            keyPassword property('keystore.password')
+            storePassword property('keystore.storepassword')
+        }
+    }
+    compileSdk 37
+    defaultConfig {
+        applicationId "com.b3dgs.lionheart"
+        minSdkVersion 21
+        targetSdkVersion 37
+        signingConfig signingConfigs.app
+    }
+    buildTypes {
+        release {
+            shrinkResources false
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.app
+            multiDexEnabled true
+        }
+        debug {
+            signingConfig signingConfigs.app
+            multiDexEnabled true
+        }
+    }
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
+    }
+
+    sourceSets {
+        main {
+            assets.srcDirs = ['src/main/assets/', '../../../assets/src/main/resources/']
+            jniLibs.srcDir 'jniLibs'
+        }
+    }
+    androidResources {
+        ignoreAssetsPattern 'stage.png:stage1.png:stage2.png:stage3.png:stage_hard.png:stage1_hard.png:stage2_hard.png:stage3_hard.png'
+    }
+    namespace 'com.b3dgs.lionheart'
+}
+
+afterEvaluate {
+    signing {
+        required { isReleaseBuild() }
+        sign configurations.archives
+    }
+}
+
+dependencies {
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
+    //noinspection GradleDependency
+    implementation 'net.java.dev.jna:jna:5.18.0@aar'
+    implementation 'com.b3dgs:b3dgs-parent:2.0.0-SNAPSHOT'
+    implementation 'com.b3dgs.lionengine:lionengine-core:10.0.0-SNAPSHOT'
+    implementation 'com.b3dgs.lionengine:lionengine-core-android:10.0.0-SNAPSHOT'
+    implementation 'com.b3dgs.lionengine:lionengine-audio-sc68:10.0.0-SNAPSHOT'
+    implementation 'com.b3dgs.lionheart:lionheart-game:1.4.0-SNAPSHOT'
+}

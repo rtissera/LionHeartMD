@@ -1,0 +1,17 @@
+/bin
+/target
+/doc
+/build
+/dist
+/extra
+*.class
+*xml.versionsBackup
+.project
+org.eclipse.core.resources.prefs
+org.eclipse.m2e.core.prefs
+org.sonar.ide.eclipse.core.prefs
+.classpath
+.checkstyle
+.sonar
+.lionengine
+built-jar.properties

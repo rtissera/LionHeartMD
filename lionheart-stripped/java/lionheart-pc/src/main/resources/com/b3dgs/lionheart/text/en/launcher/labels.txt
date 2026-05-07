@@ -1,0 +1,27 @@
+Language:
+Scale:
+Ratio:
+Resolution:
+Available:
+Windowed:
+Filter:
+Gameplay:
+2 bouttons:
+Music:
+  Sfx:
+Strategy:
+Parallel:
+VSync:
+Raster:
+Visible:
+Sword:
+Background:
+Foreground:
+Zoom:
+Advanced
+Controls
+Play
+Create server
+Join server
+Editor
+Exit

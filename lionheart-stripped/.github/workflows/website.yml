@@ -1,0 +1,41 @@
+name: Website
+
+on:
+   push:
+      branches:
+      - master
+      paths:
+      - .github/workflows/website.yml
+      - website/**
+
+jobs:
+   build:
+      runs-on: ubuntu-latest
+
+      defaults:
+         run:
+            working-directory: website
+
+      steps:
+      -  name: Checkout
+         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+         with:
+            fetch-depth: 1
+            fetch-tags: false
+
+      -  name: Hugo
+         uses: peaceiris/actions-hugo@75d2e84710de30f6ff7268e08f310b60ef14033f
+         with:
+            hugo-version: latest
+            extended: true
+
+      -  name: Build
+         run: hugo --minify
+
+      -  name: FTP Deploy
+         uses: SamKirkland/FTP-Deploy-Action@a51268f67f6605236975928ae28b0f7e9971d50a
+         with:
+            server: ${{ secrets.FTP_SERVER }}
+            username: ${{ secrets.FTP_SITE_USER }}
+            password: ${{ secrets.FTP_SITE_PASS }}
+            local-dir: website/public/

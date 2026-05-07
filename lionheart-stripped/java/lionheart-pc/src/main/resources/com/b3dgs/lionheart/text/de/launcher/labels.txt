@@ -1,0 +1,27 @@
+Sprache:
+Skalierung:
+Seitenverhältnis
+Auflösung:
+Erhältlich:
+Fenster Modus:
+Filter:
+Spielweise:
+2 Tasten:
+Musik:
+   Sfx:
+Strategy:
+Parallel:
+VSync:
+Raster:
+Sichtbar:
+Schwert:
+Hintergrund:
+Vordergrund:
+Zoomen:
+Erweiterte Einstellungen
+Steuerung
+Spielen
+Server einrichten
+Server beitreten
+Editor
+Beenden
