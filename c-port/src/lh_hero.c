@@ -23,20 +23,8 @@
 #define HERO_FRAME_JUMP_LAST  19
 #define HERO_FRAME_FALL       20
 
-static bool tile_solid(const lh_map_tile* m, int tile_w, int tile_h, double px, double py)
-{
-    if (!m || tile_w <= 0 || tile_h <= 0) return false;
-    return lh_map_tile_get_tile_at_pixel(m, (int)px, (int)py) >= 0;
-}
-
-/* Probe at three x positions along an edge (left/center/right). */
-static bool tile_solid_3(const lh_map_tile* m, int tile_w, int tile_h,
-                         double px_left, double px_right, double py)
-{
-    return tile_solid(m, tile_w, tile_h, px_left,  py)
-        || tile_solid(m, tile_w, tile_h, (px_left + px_right) * 0.5, py)
-        || tile_solid(m, tile_w, tile_h, px_right, py);
-}
+/* Tile collision now goes through the formula-driven
+ * lh_tile_collision module (lh_tile_collision_solid_at / _solid_3). */
 
 void lh_hero_init(lh_hero* h, double x, double y)
 {
@@ -91,7 +79,7 @@ static int hero_pick_frame(const lh_hero* h)
     }
 }
 
-void lh_hero_update(lh_hero* h, const lh_map_tile* map, int tile_w, int tile_h, double extrp)
+void lh_hero_update(lh_hero* h, const lh_tile_collision_ctx* coll, double extrp)
 {
     if (!h) return;
     h->tick++;
@@ -115,22 +103,24 @@ void lh_hero_update(lh_hero* h, const lh_map_tile* map, int tile_w, int tile_h, 
     double new_x = old_x + h->vx * extrp;
     double new_y = old_y + h->vy * extrp;
 
-    if (map && tile_w > 0 && tile_h > 0)
+    if (coll && coll->map && coll->tile_w > 0 && coll->tile_h > 0)
     {
-        /* Vertical resolve — multi-probe along foot line. */
+        const int tile_h_loc = coll->tile_h;
+
+        /* Vertical resolve — formula-driven probe along foot line. */
         const double foot_l = new_x + 2.0;
         const double foot_r = new_x + HERO_W - 2.0;
         const double foot_y = new_y + HERO_H;
-        if (h->vy >= 0.0 && tile_solid_3(map, tile_w, tile_h, foot_l, foot_r, foot_y))
+        if (h->vy >= 0.0 && lh_tile_collision_solid_3(coll, foot_l, foot_r, foot_y))
         {
-            const int tile_top = ((int)foot_y / tile_h) * tile_h;
+            const int tile_top = ((int)foot_y / tile_h_loc) * tile_h_loc;
             new_y = (double)(tile_top - HERO_H);
             h->vy = 0.0;
             h->on_ground = true;
         }
-        else if (h->vy < 0.0 && tile_solid_3(map, tile_w, tile_h, foot_l, foot_r, new_y))
+        else if (h->vy < 0.0 && lh_tile_collision_solid_3(coll, foot_l, foot_r, new_y))
         {
-            const int tile_bot = ((int)new_y / tile_h + 1) * tile_h;
+            const int tile_bot = ((int)new_y / tile_h_loc + 1) * tile_h_loc;
             new_y = (double)tile_bot;
             h->vy = 0.0;
         }
@@ -139,25 +129,26 @@ void lh_hero_update(lh_hero* h, const lh_map_tile* map, int tile_w, int tile_h, 
             h->on_ground = false;
         }
 
-        /* Horizontal resolve — probe at three vertical points (foot/mid/head). */
+        /* Horizontal resolve — three vertical probe points. */
         const double mid_y_top = new_y + 4.0;
         const double mid_y_mid = new_y + HERO_H * 0.5;
         const double mid_y_bot = new_y + HERO_H - 4.0;
+        const int    tile_w_loc = coll->tile_w;
         if (h->vx > 0.0
-            && (tile_solid(map, tile_w, tile_h, new_x + HERO_W, mid_y_top)
-             || tile_solid(map, tile_w, tile_h, new_x + HERO_W, mid_y_mid)
-             || tile_solid(map, tile_w, tile_h, new_x + HERO_W, mid_y_bot)))
+            && (lh_tile_collision_solid_at(coll, new_x + HERO_W, mid_y_top)
+             || lh_tile_collision_solid_at(coll, new_x + HERO_W, mid_y_mid)
+             || lh_tile_collision_solid_at(coll, new_x + HERO_W, mid_y_bot)))
         {
-            const int tile_left = (((int)(new_x + HERO_W) / tile_w)) * tile_w;
+            const int tile_left = (((int)(new_x + HERO_W) / tile_w_loc)) * tile_w_loc;
             new_x = (double)(tile_left - HERO_W);
             h->vx = 0.0;
         }
         else if (h->vx < 0.0
-            && (tile_solid(map, tile_w, tile_h, new_x, mid_y_top)
-             || tile_solid(map, tile_w, tile_h, new_x, mid_y_mid)
-             || tile_solid(map, tile_w, tile_h, new_x, mid_y_bot)))
+            && (lh_tile_collision_solid_at(coll, new_x, mid_y_top)
+             || lh_tile_collision_solid_at(coll, new_x, mid_y_mid)
+             || lh_tile_collision_solid_at(coll, new_x, mid_y_bot)))
         {
-            const int tile_right = ((int)new_x / tile_w + 1) * tile_w;
+            const int tile_right = ((int)new_x / tile_w_loc + 1) * tile_w_loc;
             new_x = (double)tile_right;
             h->vx = 0.0;
         }

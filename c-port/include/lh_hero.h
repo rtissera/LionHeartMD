@@ -18,6 +18,7 @@
 #include "lh_le_image_buffer.h"
 #include "lh_le_map_tile.h"
 #include "lh_le_transformable.h"
+#include "lh_tile_collision.h"
 
 typedef enum {
     LH_HERO_IDLE = 0,
@@ -47,7 +48,7 @@ typedef struct {
 
 void lh_hero_init       (lh_hero* h, double x, double y);
 void lh_hero_load_sprite(lh_hero* h, lh_image_buffer* atlas, int cols, int rows);
-void lh_hero_update     (lh_hero* h, const lh_map_tile* map, int tile_w, int tile_h, double extrp);
+void lh_hero_update     (lh_hero* h, const lh_tile_collision_ctx* coll, double extrp);
 void lh_hero_render     (const lh_hero* h, lh_graphic* g, const lh_camera* cam);
 
 double lh_hero_get_x(const lh_hero* h);

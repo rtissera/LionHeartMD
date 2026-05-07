@@ -167,12 +167,17 @@ void lh_world_update(lh_world* w, double extrp)
 {
     if (!w || w->paused) return;
 
-    /* Hero physics + collision against the active tile grid. */
+    /* Hero physics + formula-driven tile collision. */
     lh_input_update();
-    lh_hero_update(&w->hero, &w->map,
-                   w->sheets.tile_width  > 0 ? w->sheets.tile_width  : 16,
-                   w->sheets.tile_height > 0 ? w->sheets.tile_height : 16,
-                   extrp);
+    const lh_tile_collision_ctx coll = {
+        .map         = &w->map,
+        .tile_groups = &w->tile_groups,
+        .coll_groups = &w->groups,
+        .formulas    = &w->formulas,
+        .tile_w      = w->sheets.tile_width  > 0 ? w->sheets.tile_width  : 16,
+        .tile_h      = w->sheets.tile_height > 0 ? w->sheets.tile_height : 16,
+    };
+    lh_hero_update(&w->hero, &coll, extrp);
 
     lh_camera_tracker_update     (&w->tracker, extrp);
     lh_handler_update            (&w->handler, extrp);
