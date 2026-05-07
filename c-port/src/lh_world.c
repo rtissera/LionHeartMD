@@ -7,6 +7,7 @@
 #include "lh_constant.h"
 #include "lh_extension.h"
 #include "lh_folder.h"
+#include "lh_input.h"
 #include "lh_le_check.h"
 #include "lh_map_tile_persister.h"
 #include "lh_medias.h"
@@ -128,6 +129,19 @@ bool lh_world_load_stage(lh_world* w, const char* media)
         /* Full impl: if (fb) lh_handler_add(&w->handler, fb); */
     }
 
+    /* 4b. Hero spawn at first checkpoint (or stage origin). Phase 7+
+     * placeholder; phase 8 swaps for the full Valdyn featurable. */
+    {
+        const lh_coord c = lh_checkpoint_handler_get_current(&w->checkpoints);
+        const int tw = w->sheets.tile_width  > 0 ? w->sheets.tile_width  : 16;
+        const int th = w->sheets.tile_height > 0 ? w->sheets.tile_height : 16;
+        const double sx = (c.x > 0.0 ? c.x : 4.0) * tw;
+        const double sy = (c.y > 0.0 ? c.y : 4.0) * th;
+        lh_hero_init(&w->hero, sx, sy);
+        /* Camera tracks the hero. */
+        lh_camera_tracker_track(&w->tracker, &w->hero.transformable);
+    }
+
     /* 5. Camera limits — pixel bounds from map dimensions if loaded. */
     const int map_w = lh_map_tile_get_in_tile_width (&w->map) * w->sheets.tile_width;
     const int map_h = lh_map_tile_get_in_tile_height(&w->map) * w->sheets.tile_height;
@@ -143,6 +157,13 @@ bool lh_world_load_stage(lh_world* w, const char* media)
 void lh_world_update(lh_world* w, double extrp)
 {
     if (!w || w->paused) return;
+
+    /* Hero physics + collision against the active tile grid. */
+    lh_input_update();
+    lh_hero_update(&w->hero, &w->map,
+                   w->sheets.tile_width  > 0 ? w->sheets.tile_width  : 16,
+                   w->sheets.tile_height > 0 ? w->sheets.tile_height : 16,
+                   extrp);
 
     lh_camera_tracker_update     (&w->tracker, extrp);
     lh_handler_update            (&w->handler, extrp);
@@ -211,6 +232,7 @@ void lh_world_render(lh_world* w, lh_graphic* g)
 
     lh_landscape_render_background(&w->landscape, g, &w->camera);
     render_tiles(w, g);
+    lh_hero_render(&w->hero, g, &w->camera);
     lh_handler_render(&w->handler, g);
     lh_landscape_render_foreground(&w->landscape, g, &w->camera);
 }

@@ -23,6 +23,7 @@
 #include "lh_game_config.h"
 #include "lh_init_config.h"
 #include "lh_landscape.h"
+#include "lh_hero.h"
 #include "lh_le_camera.h"
 #include "lh_le_camera_tracker.h"
 #include "lh_le_factory.h"
@@ -57,6 +58,10 @@ typedef struct {
 
     /* Sheet PNG surfaces (asset cache, NOT owned). Indexed by sheet id. */
     lh_image_buffer*      sheet_surfaces[LH_TILE_SHEETS_MAX];
+
+    /* First-playable hero — phase 7+ placeholder. Phase 8 swaps for a
+     * full Featurable graph (Animatable + Rasterable + StateHandler + …). */
+    lh_hero               hero;
 
     /* Game-level inputs. */
     lh_game_config        game;
