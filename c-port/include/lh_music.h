@@ -6,7 +6,7 @@
  *
  * Mirrors com.b3dgs.lionheart.Music / MusicPlayer using libsc68 to
  * decode the 18 .sc68 tracks shipped under
- * com/b3dgs/lionheart/music/*.sc68.
+ * com/b3dgs/lionheart/music sc68 tracks.
  *
  * libsc68 ships with the upstream Java distribution as a prebuilt
  * shared library (lib/libsc68.so on this branch). It is dynamically
