@@ -41,6 +41,8 @@ typedef enum {
     LH_FEAT_MAX = 80
 } lh_feature_id;
 
+#include "lh_le_graphic.h"
+
 typedef struct lh_featurable lh_featurable;
 typedef struct lh_feature    lh_feature;
 
@@ -52,20 +54,39 @@ typedef struct {
     void (*destroy)        (lh_feature* f);
 } lh_feature_vt;
 
+/* Optional update participation. Concrete feature sets this field at init
+ * iff it implements RoutineUpdate (Java parlance). NULL otherwise. */
+typedef struct {
+    int  priority;
+    void (*update_before)(lh_feature* f);            /* nullable */
+    void (*update)       (lh_feature* f, double extrp);
+    void (*update_after) (lh_feature* f);            /* nullable */
+} lh_feature_update_vt;
+
+/* Optional render participation. NULL otherwise. */
+typedef struct {
+    int  priority;
+    void (*render)(lh_feature* f, lh_graphic* g);
+} lh_feature_render_vt;
+
 /* Feature base. Concrete features embed this as first field. */
 struct lh_feature {
-    const lh_feature_vt* vt;       /* nullable */
-    lh_featurable*       owner;    /* set by featurable_add_feature */
-    lh_feature_id        id;       /* primary type key */
+    const lh_feature_vt*        vt;            /* nullable lifecycle vt */
+    const lh_feature_update_vt* update_vt;     /* nullable RoutineUpdate */
+    const lh_feature_render_vt* render_vt;     /* nullable RoutineRender */
+    lh_featurable*              owner;         /* set by add_feature */
+    lh_feature_id               id;            /* primary type key */
     /* Concrete feature fields follow in derived structs. */
 };
 
 /* Helper: initialize feature base. */
 static inline void lh_feature_init(lh_feature* f, lh_feature_id id, const lh_feature_vt* vt)
 {
-    f->vt    = vt;
-    f->owner = (lh_featurable*)0;
-    f->id    = id;
+    f->vt        = vt;
+    f->update_vt = (lh_feature_update_vt*)0;
+    f->render_vt = (lh_feature_render_vt*)0;
+    f->owner     = (lh_featurable*)0;
+    f->id        = id;
 }
 
 #endif
