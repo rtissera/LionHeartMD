@@ -7,6 +7,8 @@
 #ifndef LH_LE_VIEWER_H
 #define LH_LE_VIEWER_H
 
+#include <stdbool.h>
+
 typedef struct lh_viewer lh_viewer;
 
 typedef struct {
