@@ -2,7 +2,7 @@
 [CmdletBinding()]
 param(
   [Parameter(Mandatory)]
-  [ValidateSet('win32-x86','win32-x86-64','linux-x86-64','linux-x86-32','macos-x86_64','macos-aarch64','android-arm')]
+  [ValidateSet('win32-x86','win32-x86-64','linux-x86-64','linux-x86-32','macos-x86_64','macos-aarch64')]
   [string]$Platform,
   [string]$AppName       = 'lionheart-remake',
   [string]$Architecture  = 'x64',

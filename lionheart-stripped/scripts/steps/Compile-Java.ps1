@@ -34,7 +34,7 @@ function Invoke-CompileJava ([hashtable]$ctx) {
   }
 
   $profiles = @(
-    if ($ctx.Platform -eq 'android-arm') { 'game' } else { 'release' }
+    'release'
     $platformProfileMap[$ctx.Platform]
   ) | Where-Object { $_ }
 
@@ -56,19 +56,4 @@ function Invoke-CompileJava ([hashtable]$ctx) {
   $env:MAVEN_GPG_PASSPHRASE = $ctx.GpgPassphrase
 
   Invoke-Proc -Name 'Maven' -Exe 'mvn' -Arguments $mvnArgs -WorkDir $ctx.Root
-
-  # ── Gradle (Android only) ─────────────────────────────────────────────────
-  if ($ctx.Platform -eq 'android-arm') {
-    $workDir = Join-Path $ctx.Root java/lionheart-android/
-    Invoke-Proc -Name 'Gradle' -Exe './java/lionheart-android/gradlew' -Arguments @(
-      "--%",
-      "-p $workDir",
-      'assembleRelease',
-      "-Dkeystore=$keystore",
-      '-Dstoretype=PKCS12',
-      "-Dkeystore.alias=$($ctx.KeystoreAlias)",
-      "-Dkeystore.pass=$($ctx.KeystorePass)",
-      "-Dkeystore.key=$($ctx.KeystorePass)"
-    )
-  }
 }
