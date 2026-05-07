@@ -15,6 +15,7 @@
 
 #include "lh_le_camera.h"
 #include "lh_le_graphic.h"
+#include "lh_le_image_buffer.h"
 #include "lh_le_map_tile.h"
 #include "lh_le_transformable.h"
 
@@ -27,18 +28,27 @@ typedef enum {
 
 typedef struct {
     lh_transformable transformable;
-    double           vx;          /* horizontal velocity, px/tick */
-    double           vy;          /* vertical velocity, px/tick (down +) */
+    double           vx;
+    double           vy;
     bool             on_ground;
     bool             facing_left;
     int              tick;
     lh_hero_state    state;
-    int              anim_frame;  /* 0..3 placeholder anim cycle */
+    int              anim_frame;   /* current 1-based sheet frame */
+    int              walk_idx;     /* walk cycle position 0..N */
+
+    /* Sprite atlas (cached, NOT owned). */
+    lh_image_buffer* sprite;
+    int              sprite_cols;
+    int              sprite_rows;
+    int              frame_w;
+    int              frame_h;
 } lh_hero;
 
-void lh_hero_init   (lh_hero* h, double x, double y);
-void lh_hero_update (lh_hero* h, const lh_map_tile* map, int tile_w, int tile_h, double extrp);
-void lh_hero_render (const lh_hero* h, lh_graphic* g, const lh_camera* cam);
+void lh_hero_init       (lh_hero* h, double x, double y);
+void lh_hero_load_sprite(lh_hero* h, lh_image_buffer* atlas, int cols, int rows);
+void lh_hero_update     (lh_hero* h, const lh_map_tile* map, int tile_w, int tile_h, double extrp);
+void lh_hero_render     (const lh_hero* h, lh_graphic* g, const lh_camera* cam);
 
 double lh_hero_get_x(const lh_hero* h);
 double lh_hero_get_y(const lh_hero* h);

@@ -36,6 +36,10 @@ void lh_graphic_draw_image(lh_graphic* g, const lh_image_buffer* img, int x, int
 void lh_graphic_draw_image_region(lh_graphic* g, const lh_image_buffer* img,
                                   int sx, int sy, int sw, int sh,
                                   int dx, int dy);
+void lh_graphic_draw_image_region_flip(lh_graphic* g, const lh_image_buffer* img,
+                                       int sx, int sy, int sw, int sh,
+                                       int dx, int dy,
+                                       bool flip_h, bool flip_v);
 
 /* Render-target push/pop — used by ImageBuffer::createGraphic surfaces. */
 void lh_graphic_push_target(lh_graphic* g, lh_image_buffer* target);

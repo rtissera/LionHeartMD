@@ -76,6 +76,21 @@ void lh_graphic_draw_image_region(lh_graphic* g, const lh_image_buffer* img,
     SDL_RenderCopy(g->sdl, img->tex, &src, &dst);
 }
 
+void lh_graphic_draw_image_region_flip(lh_graphic* g, const lh_image_buffer* img,
+                                       int sx, int sy, int sw, int sh,
+                                       int dx, int dy,
+                                       bool flip_h, bool flip_v)
+{
+    if (!img || !img->tex) return;
+    SDL_SetTextureAlphaMod(img->tex, g->alpha);
+    SDL_Rect src = { sx, sy, sw, sh };
+    SDL_Rect dst = { dx, dy, sw, sh };
+    SDL_RendererFlip flip = SDL_FLIP_NONE;
+    if (flip_h) flip |= SDL_FLIP_HORIZONTAL;
+    if (flip_v) flip |= SDL_FLIP_VERTICAL;
+    SDL_RenderCopyEx(g->sdl, img->tex, &src, &dst, 0.0, NULL, flip);
+}
+
 void lh_graphic_push_target(lh_graphic* g, lh_image_buffer* target)
 {
     g->prev_target = SDL_GetRenderTarget(g->sdl);

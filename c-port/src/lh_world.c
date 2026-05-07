@@ -138,6 +138,15 @@ bool lh_world_load_stage(lh_world* w, const char* media)
         const double sx = (c.x > 0.0 ? c.x : 4.0) * tw;
         const double sy = (c.y > 0.0 ? c.y : 4.0) * th;
         lh_hero_init(&w->hero, sx, sy);
+
+        /* Load Valdyn sprite atlas (13 cols x 12 rows per Valdyn.xml frames). */
+        lh_image_buffer* atlas = lh_asset_get_image(
+            "com/b3dgs/lionheart/hero/valdyn/Valdyn.png");
+        if (atlas)
+        {
+            lh_hero_load_sprite(&w->hero, atlas, 13, 12);
+        }
+
         /* Camera tracks the hero. */
         lh_camera_tracker_track(&w->tracker, &w->hero.transformable);
     }
