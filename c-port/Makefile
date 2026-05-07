@@ -22,12 +22,18 @@ SRCS := $(filter-out $(TEST_SRCS),$(wildcard $(SRC_DIR)/*.c))
 OBJS := $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 DEPS := $(OBJS:.o=.d)
 
-# Object files needed by every test binary (engine-free subset).
+# Object files linked into every test binary. Tests are tiny CLIs with
+# no main game loop, so we link the modules they may consult plus the
+# SDL libs they need at link time. Unused .o entries are dead-stripped.
 TEST_LIB_OBJS := \
     $(OBJ_DIR)/lh_le_file_reading.o \
     $(OBJ_DIR)/lh_le_file_writing.o \
     $(OBJ_DIR)/lh_le_map_tile.o \
-    $(OBJ_DIR)/lh_map_tile_persister.o
+    $(OBJ_DIR)/lh_map_tile_persister.o \
+    $(OBJ_DIR)/lh_audio.o \
+    $(OBJ_DIR)/lh_music.o \
+    $(OBJ_DIR)/lh_sfx.o \
+    $(OBJ_DIR)/lh_medias.o
 
 TEST_BINS := $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%,$(TEST_SRCS))
 
@@ -42,7 +48,7 @@ test: $(TEST_BINS)
 	@for b in $(TEST_BINS); do echo "=== $$b ==="; $$b || exit 1; done
 
 $(OBJ_DIR)/test_%: $(SRC_DIR)/test_%.c $(TEST_LIB_OBJS) | $(OBJ_DIR)
-	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) -o $@ $< $(TEST_LIB_OBJS) -lm
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) -o $@ $< $(TEST_LIB_OBJS) $(LDLIBS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -MMD -MP -c -o $@ $<
